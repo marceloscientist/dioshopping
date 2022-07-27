@@ -2,7 +2,7 @@ import { Grid, Button, TextField } from '@material-ui/core/';
 import { useState, useEffect } from 'react';
 
 const Contatos = () => {
-    
+   
     const [message, setMessage] = useState([])
     useEffect(async()=>{
         const response = await fetch('http://localhost:5000/message')
@@ -10,6 +10,7 @@ const Contatos = () => {
         setMessage(data);
 
     },[])
+
 
     console.log(message)
 
@@ -23,15 +24,20 @@ const Contatos = () => {
             <Button className="mt-2" variant="contained" color="primary">
                 Sent
             </Button>
-            <div className="card mt-2">
-                <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p className="card-text">
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                    </p>
-                </div>
-            </div>
+            {message.map((content) => {
+                return (
+                    <div className="card mt-2">
+                    <div className="card-body">
+                        <h5 className="card-title">{content.email}</h5>
+                        <p className="card-text">{content.message}</p>
+                        <p className="card-text">
+                            <small className="text-muted">{content.created_at}</small>
+                        </p>
+                    </div>
+                    </div>
+
+                )
+            })}
         </>
     )
 }
